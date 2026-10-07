@@ -34,7 +34,7 @@
   }
   main { max-width: 64rem; margin: 0 auto; padding: clamp(1.5rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem) 3rem; }
   footer { max-width: 64rem; margin: 0 auto; padding: 0 clamp(1rem, 4vw, 2rem) 3rem; color: rgba(255,255,255,.7); font: 600 .9rem var(--display); }
-  a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  a:focus-visible, summary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 
   /* Tabs */
   .tab {
@@ -53,7 +53,7 @@
     border-radius: 0 6px 6px 6px;
     box-shadow: 0 6px 0 -2px rgba(255,255,255,.3), 0 12px 0 -4px rgba(255,255,255,.15);
   }
-  .sheet a:focus-visible { outline-color: var(--ink); }
+  .sheet a:focus-visible, .sheet summary:focus-visible { outline-color: var(--ink); }
 
   /* Cover: the tab row doubles as the table of contents. The tabs fan out once on load. */
   .tabs { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 6px; }
@@ -80,6 +80,25 @@
     border: 2px dashed var(--c); border-radius: 6px; color: var(--muted); font-style: italic;
   }
   .back { align-self: flex-end; color: var(--ink); font: 600 .95rem var(--display); }
+
+  /* Resource cards */
+  .byline { margin: 0; color: var(--muted); font-size: 1rem; }
+  .res { border: 2px solid var(--c); border-radius: 8px; padding: 1.25rem 1.5rem; }
+  .res h3 { margin: 0 0 .25rem; font: 800 1.4rem/1.2 var(--display); letter-spacing: -.02em; }
+  .badge { display: inline-block; margin-bottom: .75rem; padding: .1rem .7rem; background: var(--c); border-radius: 99px; font: 800 .75rem/1.6 var(--display); letter-spacing: .06em; text-transform: uppercase; }
+  .res p { margin: 0 0 .75rem; }
+  .res dl { margin: 0 0 .75rem; display: grid; grid-template-columns: max-content 1fr; gap: .25rem 1rem; }
+  .res dt { font: 600 .95rem/1.9 var(--display); color: var(--muted); }
+  .res dd { margin: 0; overflow-wrap: anywhere; }
+  .res a { color: var(--ink); }
+  .res details { margin: 0 0 .75rem; }
+  .res summary { cursor: pointer; font: 600 .95rem var(--display); }
+  .hours { margin-top: .5rem; display: grid; gap: .5rem; }
+  .hours div { padding-left: .75rem; border-left: 4px solid var(--c); }
+  .hours b { font: 600 .95rem var(--display); }
+  .plan { margin: 0; padding: .75rem 1rem; background: #F2F4F9; border-radius: 6px; font-style: italic; }
+  .plan span { display: block; font: 600 .85rem var(--display); font-style: normal; color: var(--muted); }
+  @media (max-width: 34rem) { .res dl { grid-template-columns: 1fr; } .res dt { line-height: 1.4; } }
 
   /* For Google Slides: <iframe class="embed" src="YOUR_EMBED_LINK" allowfullscreen></iframe> */
   .embed { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 6px; }
@@ -114,7 +133,8 @@
   <section class="chapter" id="clc-student-resources" style="--c:#FF8A1F;--i:0">
     <h2 class="tab">CLC Student Resources</h2>
     <div class="sheet">
-      <p class="empty">Work for this section goes here.</p>
+      <p class="byline">Noah Zielinski · CLC 120 302 · 8/26/2026</p>
+      <div id="resources" style="display:grid;gap:1.25rem"></div>
       <a class="back" href="#contents">Back to contents</a>
     </div>
   </section>
@@ -168,5 +188,67 @@
   </section>
 </main>
 <footer>© 2026 Noah</footer>
+<script>
+  // Content for the CLC Student Resources section. Edit text here.
+  const WK = 'Mon–Thu', MT = 'Mon–Thu 7:30 a.m.–6:30 p.m. · Fri 7:30 a.m.–4:30 p.m. · Sat–Sun Closed';
+  const resources = [
+    { name: 'Counseling & Peer Support', tag: 'Wellness', c: '#FF6F9C',
+      desc: 'CAPS provides culturally responsive clinical services to CLC students, contributing to their academic, personal, and professional success. It offers an array of services to meet student mental health needs through a lens of cultural humility and an individualized, student-focused approach.',
+      email: 'caps.info@clcillinois.edu', phone: ['847-543-2032'],
+      locs: 'Grayslake: A151',
+      hours: [['Grayslake', 'Mon 8:00 a.m.–6:30 p.m. · Tue–Fri 8:00 a.m.–4:30 p.m. · Sat–Sun Closed']],
+      url: 'https://stuportal.clcillinois.edu/resources/caps',
+      plan: 'I struggle a bit with self-confidence, and navigating interactions in relationships. I would use this resource to help me unpack my home and school life.' },
+    { name: 'CLC Library', tag: 'Sense of Community', c: '#FFC93C',
+      desc: 'On all three campuses, the CLC Library is your portal to knowledge and success.',
+      email: '', phone: ['847-908-5997'],
+      locs: 'Grayslake: Library · Lakeshore: Library · Southlake: Library · Online',
+      hours: [['Grayslake', 'Mon–Thu 7:30 a.m.–9:00 p.m. · Fri 7:30 a.m.–4:30 p.m. · Sat 9:00 a.m.–3:00 p.m. · Sun Closed'],
+              ['Lakeshore', 'Mon–Thu 8:30 a.m.–7:30 p.m. · Fri 8:30 a.m.–4:30 p.m. · Sat–Sun Closed'],
+              ['Southlake', 'Mon–Thu 8:30 a.m.–7:30 p.m. · Fri 8:30 a.m.–4:30 p.m. · Sat 9:00 a.m.–1:00 p.m. · Sun Closed'],
+              ['Online', 'Mon–Thu 9:00 a.m.–7:00 p.m. · Fri 9:00 a.m.–4:00 p.m. · Sat 10:00 a.m.–2:00 p.m. · Sun 2:00–6:00 p.m.']],
+      url: 'https://stuportal.clcillinois.edu/resources/library',
+      plan: 'I can connect with peers outside of class, especially those with similar interests to mine, like Cybersecurity.' },
+    { name: 'Financial Aid Office', tag: 'Financial', c: '#7BD389',
+      desc: 'The Financial Aid Office at CLC is dedicated to supporting students in achieving their educational aspirations by providing access to a wide range of financial assistance programs. These include scholarships, grants, loans and work-study opportunities, all designed to make higher education more accessible and affordable.',
+      email: 'finaid@clcillinois.edu', phone: ['847-543-2062', '847-543-3062'],
+      locs: 'Grayslake: B114 · Lakeshore: N34-116 · Online',
+      hours: [['Grayslake', MT], ['Lakeshore', MT]],
+      url: 'https://stuportal.clcillinois.edu/resources/financial-aid',
+      plan: 'I can schedule appointments with the financial aid office to sort out paperwork and enrollment for loans and for scholarships.' },
+    { name: 'Welcome and One Stop Center', tag: 'Academic', c: '#4C8DFF',
+      desc: 'Have a question or need assistance? The Welcome and One Stop Center consolidates all major student services functions, making it easier to get registration and financial assistance.',
+      email: '', phone: ['847-543-2085'],
+      locs: 'Grayslake: B114 · Lakeshore: 34 N Sheridan, Room 34N-118 (1st floor) · Online',
+      hours: [['Grayslake', MT], ['Lakeshore', MT]],
+      url: 'https://stuportal.clcillinois.edu/resources/wosc',
+      plan: 'I oftentimes call the Welcome and One Stop Center whenever I have questions, such as when I can’t access the student portal, or about dates and deadlines.' },
+    { name: 'Technology Help Desk', tag: 'Technology', c: '#9B6BFF',
+      desc: 'The Help Desk is a service of CLC’s Information Technology Services Department. It can be contacted whether on or off campus.',
+      email: '', phone: ['847-543-4357'],
+      locs: 'Online only',
+      hours: [['Online', 'Mon–Fri 7:30 a.m.–9:00 p.m. · Sat–Sun Closed']],
+      url: 'https://stuportal.clcillinois.edu/resources/help-desk',
+      plan: 'I use the Help Desk whenever I’m not certain how to navigate the student resources. They can also help with basic problems with personal computers, and with problems with the school computers.' }
+  ];
+  const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  document.getElementById('resources').innerHTML = resources.map((r, i) => `
+    <article class="res" style="--c:${r.c}">
+      <h3>${i + 1}. ${esc(r.name)}</h3>
+      <span class="badge">${esc(r.tag)}</span>
+      <p>${esc(r.desc)}</p>
+      <dl>
+        <dt>Contact</dt>
+        <dd>${r.email ? `<a href="mailto:${r.email}">${r.email}</a><br>` : ''}${r.phone.map(p => `<a href="tel:${p.replace(/-/g, '')}">${p}</a>`).join(' · ')}</dd>
+        <dt>Location</dt><dd>${esc(r.locs)}</dd>
+        <dt>Online</dt><dd><a href="${r.url}">${r.url.replace('https://', '')}</a></dd>
+      </dl>
+      <details>
+        <summary>Hours</summary>
+        <div class="hours">${r.hours.map(h => `<div><b>${h[0]}</b><br>${h[1]}</div>`).join('')}</div>
+      </details>
+      <p class="plan"><span>How I envision using this resource</span>${esc(r.plan)}</p>
+    </article>`).join('');
+</script>
 </body>
 </html>
