@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noah’s Semester Portfolio</title>
+<meta name="description" content="Noah’s portfolio of work from this semester.">
+<meta name="theme-color" content="#16213A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2316213A'/%3E%3Crect x='6' y='6' width='11' height='7' rx='2' fill='%23FF8A1F'/%3E%3Crect x='6' y='12' width='20' height='14' rx='1.5' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Newsreader:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  /* The page works like a binder: a navy desk, white sheets, and a colored divider tab per section. */
+  :root {
+    --desk: #16213A;
+    --sheet: #FDFDFE;
+    --ink: #16213A;
+    --muted: #586177;
+    --display: 'Bricolage Grotesque', 'Arial Black', system-ui, sans-serif;
+    --text: 'Newsreader', Georgia, 'Times New Roman', serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    font: 400 1.125rem/1.7 var(--text);
+    background-color: var(--desk);
+    background-image:
+      linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  main { max-width: 64rem; margin: 0 auto; padding: clamp(1.5rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem) 3rem; }
+  footer { max-width: 64rem; margin: 0 auto; padding: 0 clamp(1rem, 4vw, 2rem) 3rem; color: rgba(255,255,255,.7); font: 600 .9rem var(--display); }
+  a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+  /* Tabs */
+  .tab {
+    display: block; width: fit-content; margin: 0;
+    padding: .75rem 1.15rem .65rem;
+    background: var(--c); color: var(--ink);
+    font: 800 1.05rem/1.2 var(--display); letter-spacing: -.01em; text-decoration: none;
+    border-radius: 12px 12px 0 0;
+  }
+
+  /* Sheets */
+  .sheet {
+    position: relative;
+    padding: clamp(1.5rem, 5vw, 4rem);
+    background: var(--sheet);
+    border-radius: 0 6px 6px 6px;
+    box-shadow: 0 6px 0 -2px rgba(255,255,255,.3), 0 12px 0 -4px rgba(255,255,255,.15);
+  }
+  .sheet a:focus-visible { outline-color: var(--ink); }
+
+  /* Cover: the tab row doubles as the table of contents. The tabs fan out once on load. */
+  .tabs { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 6px; }
+  .tabs .tab {
+    transition: transform .2s;
+    animation: fan .7s cubic-bezier(.2, .8, .2, 1) backwards;
+    animation-delay: calc(var(--i) * 80ms);
+  }
+  .tabs .tab:hover { transform: translateY(-5px); }
+  @keyframes fan { from { transform: translateY(110%); } }
+  h1 { margin: 0 0 1rem; font: 800 clamp(2.75rem, 10vw, 6rem)/.92 var(--display); letter-spacing: -.04em; text-wrap: balance; }
+  .lede { margin: 0; max-width: 34rem; color: var(--muted); font-size: 1.25rem; }
+
+  /* Sections: each tab steps a little further right, like real dividers. */
+  .chapter {
+    --off: calc(var(--i) * min(6vw, 72px));
+    margin-top: clamp(3.5rem, 9vw, 6.5rem);
+    scroll-margin-top: 1.5rem;
+  }
+  .chapter .tab { margin-left: var(--off); max-width: calc(100% - var(--off)); font-size: clamp(1.25rem, 3.4vw, 1.9rem); }
+  .chapter .sheet { display: flex; flex-direction: column; gap: 1.25rem; min-height: clamp(15rem, 45vh, 26rem); }
+  .empty {
+    flex: 1; margin: 0; padding: 1.5rem; display: grid; place-items: center; text-align: center;
+    border: 2px dashed var(--c); border-radius: 6px; color: var(--muted); font-style: italic;
+  }
+  .back { align-self: flex-end; color: var(--ink); font: 600 .95rem var(--display); }
+
+  /* For Google Slides: <iframe class="embed" src="YOUR_EMBED_LINK" allowfullscreen></iframe> */
+  .embed { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 6px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .tabs .tab { animation: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <!-- HOW TO EDIT: each section below is one white sheet. Replace its <p class="empty"> with your own content. -->
+
+  <header id="contents">
+    <nav class="tabs" aria-label="Portfolio sections">
+      <a class="tab" href="#clc-student-resources" style="--c:#FF8A1F;--i:0">CLC Student Resources</a>
+      <a class="tab" href="#study-plan" style="--c:#FFC93C;--i:1">Study Plan</a>
+      <a class="tab" href="#study-strategies" style="--c:#7BD389;--i:2">Study Strategies</a>
+      <a class="tab" href="#discovering-my-career" style="--c:#2EC4B6;--i:3">Discovering My Career</a>
+      <a class="tab" href="#growth-mindset" style="--c:#4C8DFF;--i:4">Growth Mindset, Thinking, &amp; Self Advocacy</a>
+      <a class="tab" href="#identity-project" style="--c:#9B6BFF;--i:5">Identity Project</a>
+      <a class="tab" href="#wellness-plan" style="--c:#FF6F9C;--i:6">Wellness Plan</a>
+    </nav>
+    <div class="sheet" style="border-top-left-radius:0">
+      <!-- Edit your name here -->
+      <h1>Noah’s Semester Portfolio</h1>
+      <p class="lede">My work from this semester, organized into seven sections.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="clc-student-resources" style="--c:#FF8A1F;--i:0">
+    <h2 class="tab">CLC Student Resources</h2>
+    <div class="sheet">
+      <p class="empty">Work for this section goes here.</p>
+      <a class="back" href="#contents">Back to contents</a>
+    </div>
+  </section>
+
+  <section class="chapter" id="study-plan" style="--c:#FFC93C;--i:1">
+    <h2 class="tab">Study Plan</h2>
+    <div class="sheet">
+      <p class="empty">Work for this section goes here.</p>
+      <a class="back" href="#contents">Back to contents</a>
+    </div>
+  </section>
+
+  <section class="chapter" id="study-strategies" style="--c:#7BD389;--i:2">
+    <h2 class="tab">Study Strategies</h2>
+    <div class="sheet">
+      <p class="empty">Work for this section goes here.</p>
+      <a class="back" href="#contents">Back to contents</a>
+    </div>
+  </section>
+
+  <section class="chapter" id="discovering-my-career" style="--c:#2EC4B6;--i:3">
+    <h2 class="tab">Discovering My Career</h2>
+    <div class="sheet">
+      <p class="empty">Work for this section goes here.</p>
+      <a class="back" href="#contents">Back to contents</a>
+    </div>
+  </section>
+
+  <section class="chapter" id="growth-mindset" style="--c:#4C8DFF;--i:4">
+    <h2 class="tab">Growth Mindset, Thinking, &amp; Self Advocacy</h2>
+    <div class="sheet">
+      <p class="empty">Work for this section goes here.</p>
+      <a class="back" href="#contents">Back to contents</a>
+    </div>
+  </section>
+
+  <section class="chapter" id="identity-project" style="--c:#9B6BFF;--i:5">
+    <h2 class="tab">Identity Project</h2>
+    <div class="sheet">
+      <p class="empty">Work for this section goes here.</p>
+      <a class="back" href="#contents">Back to contents</a>
+    </div>
+  </section>
+
+  <section class="chapter" id="wellness-plan" style="--c:#FF6F9C;--i:6">
+    <h2 class="tab">Wellness Plan</h2>
+    <div class="sheet">
+      <p class="empty">Work for this section goes here.</p>
+      <a class="back" href="#contents">Back to contents</a>
+    </div>
+  </section>
+</main>
+<footer>© 2026 Noah</footer>
+</body>
+</html>
