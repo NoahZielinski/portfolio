@@ -116,6 +116,29 @@
   .plans dd { margin: 0; }
   @media (max-width: 34rem) { .plans { grid-template-columns: 1fr; gap: 0; } .plans dd { margin-bottom: .75rem; } }
 
+  /* Career */
+  .mini { margin: 1rem 0 .5rem; font: 800 1.05rem/1.3 var(--display); }
+  .pill { display: inline-block; margin: 0 .5rem .5rem 0; padding: .15rem .9rem; background: var(--c); border-radius: 99px; font: 800 1rem/1.6 var(--display); }
+  .pct { margin-left: .5rem; padding: .05rem .6rem; background: var(--c); border-radius: 99px; font-size: .85rem; white-space: nowrap; }
+  .matches { margin: 0 0 .75rem; padding-left: 1.5rem; display: grid; gap: .6rem; }
+  .matches li { display: grid; grid-template-columns: 1fr auto; gap: 0 1rem; }
+  .matches b { font: 800 1rem var(--display); }
+  .bar { grid-column: 1 / -1; height: .6rem; background: #E6EAF2; border-radius: 99px; overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--c); }
+  .stats.sm b { font-size: 2.1rem; }
+  .qa { margin: 0; }
+  .qa dt { margin-top: .75rem; font: 800 1rem/1.4 var(--display); }
+  .qa dd { margin: 0; overflow-wrap: anywhere; }
+
+  /* Login gate */
+  [hidden] { display: none !important; }
+  .gate { max-width: 34rem; margin: 12vh auto 0; }
+  .gate h1 { margin-bottom: .5rem; }
+  .btn { padding: .75rem 1.4rem; border: 0; border-radius: 8px; background: var(--ink); color: #fff; font: 800 1rem var(--display); cursor: pointer; }
+  .btn:focus-visible { outline: 3px solid #FF8A1F; outline-offset: 3px; }
+  .gmsg { margin: 1rem 0 0; color: #B3261E; font-weight: 600; }
+  footer button { margin-left: .75rem; padding: .15rem .7rem; border: 1px solid rgba(255,255,255,.5); border-radius: 6px; background: none; color: inherit; font: inherit; cursor: pointer; }
+
   /* For Google Slides: <iframe class="embed" src="YOUR_EMBED_LINK" allowfullscreen></iframe> */
   .embed { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 6px; }
 
@@ -126,7 +149,14 @@
 </style>
 </head>
 <body>
-<main>
+<div id="gate" class="gate sheet" style="border-radius:6px">
+  <h1 style="font-size:2.5rem">Noah’s Portfolio</h1>
+  <p>This page is for CLC students and staff. Sign in with your CLC Microsoft account to view it.</p>
+  <button id="signin" class="btn" type="button">Sign in with Microsoft</button>
+  <p id="msg" role="status" class="gmsg"></p>
+</div>
+<main id="app" hidden></main>
+<template id="vault">
   <!-- HOW TO EDIT: each section below is one white sheet. Replace its <p class="empty"> with your own content. -->
 
   <header id="contents">
@@ -183,9 +213,9 @@
       <div style="display:grid;gap:1.25rem">
         <article class="res"><h3>Reading Strategy</h3><p>I personally would use Skimming as my main reading strategy. This is because I don’t have a lot of time in my schedule, and this allows me to save on time while still understanding the structure of the information. I actually already use this strategy, and not only in class. For example, when I am rereading a book because I have some extra time, I usually skim.</p></article>
         <article class="res"><h3>Note-Taking Shorthand</h3><p>I do like decipherable shorthand. Firstly, because it just seems cool to me, to have this mini little “code language” only I understand, and secondly, because it saves time and energy. Writing &amp; instead of and, 2 instead of to, 4 instead of for, etc etc. Less hand fatigue, less time spent.</p></article>
-        <article class="res"><h3>What I Learned About Memory</h3><p>I learned that working memory is actually very small. I would have thought it could hold a couple dozen items, but I learned it can hold usually between 5 and 9 items. I also learned that it is very short, a few seconds or up to a minute. I thought it would last up to an hour. I think I was overblowing the scale of working memory. I also learned that long-term memory is basically infinite storage capacity. I was always under the impression that humans lose memory because we start running out of “space” to store memories, but it seems that’s not true.</p></article>
+        <article class="res"><h3>What I Learned About Memory</h3><p>I learned that working memory is actually very small. I would have thought it could hold a couple dozen items, but I learned it can hold usually between 5 and 9 items. I also learned that it is very short, a few seconds or up to a minute. I thought it would last up to an hour. I think I was overestimating how much working memory can do. I also learned that long-term memory is basically infinite storage capacity. I was always under the impression that humans lose memory because we start running out of “space” to store memories, but it seems that’s not true.</p></article>
         <article class="res"><h3>My Study Methods</h3><p>I like to use practice testing and concept association in my study sessions. I usually study by making a study guide, uploading it to a tool like quizlet, and running through it a bunch. When I get a question wrong, I look through the actual answer and associate it with something around me, or maybe a similar word or phrase or experience.</p></article>
-        <article class="res"><h3>My Test-Taking Plan</h3><p>I will approach my test taking in the same way outlined. I will get to the location a few minutes early, and take a few calming breaths while getting my supplies ready. I will answer all the required questions first, prioritizing the questions I know with the least amount of understanding. I will go over the test once or twice at the end, to make sure I didn’t make any accidental mistakes, provided I have the time. And I will study the results of my test, what I got right and wrong.</p></article>
+        <article class="res"><h3>My Test-Taking Plan</h3><p>I will approach test-taking the way this module outlines. I will get to the location a few minutes early, and take a few calming breaths while getting my supplies ready. I will answer all the required questions first, giving the most attention to the ones I understand the least. I will go over the test once or twice at the end, to make sure I didn’t make any accidental mistakes, provided I have the time. And I will study the results of my test, what I got right and wrong.</p></article>
       </div>
       <a class="back" href="#contents">Back to contents</a>
     </div>
@@ -194,7 +224,30 @@
   <section class="chapter" id="discovering-my-career" style="--c:#2EC4B6;--i:3">
     <h2 class="tab">Discovering My Career</h2>
     <div class="sheet">
-      <p class="empty">Work for this section goes here.</p>
+      <p class="byline">Noah Zielinski · CLC 120 College Success Seminar</p>
+      <article class="res">
+        <h3>Career Coach Worksheet</h3>
+        <span class="badge">Interests &amp; careers</span>
+        <h4 class="mini">My top three traits</h4>
+        <p><span class="pill">Investigative</span><span class="pill">Artistic</span><span class="pill">Enterprising</span></p>
+        <p>From the trait descriptions: “Thinkers who love working on interesting problems. They are ambitious and like to start and lead projects.”</p>
+        <h4 class="mini">My top three career field matches</h4>
+        <ol class="matches"><li><span>Education Administration &amp; Leadership</span><b>100%</b><div class="bar"><i style="width:100%"></i></div></li><li><span>Teaching, Training, &amp; Facilitation</span><b>100%</b><div class="bar"><i style="width:100%"></i></div></li><li><span>Learner Support &amp; Community Engagement</span><b>78%</b><div class="bar"><i style="width:78%"></i></div></li></ol>
+        <h4 class="mini">Career I explored: Education Administrators, Postsecondary <span class="pct">91% match</span></h4>
+        <div class="stats sm">
+          <div><b>$63,213</b>starting wage</div>
+          <div><b>$176,049</b>top wage</div>
+          <div><b>438</b>job openings annually</div>
+        </div>
+        <h4 class="mini">My synthesis</h4>
+        <dl class="qa"><dt>Do the top skills employers ask for match what you can or would like to do?</dt><dd>Not really</dd><dt>Who are the top three employers hiring over the past six months?</dt><dd>University of Chicago, Northwestern University, and University of Illinois Chicago</dd><dt>What does the employment projection graph show?</dt><dd>This job outlook is growing</dd><dt>What is the best thing you learned about the career?</dt><dd>The best thing I learned is that this career actually requires skills in marketing more than it does in student services, which I didn’t expect.</dd><dt>What is the worst part about the career?</dt><dd>The worst part for me is the job description itself. The day-to-day work doesn’t really appeal to me.</dd><dt>What concerns would you have about this career?</dt><dd>My main concern is working with teenagers, because I find them hard to work with.</dd><dt>Is it a career you would consider pursuing?</dt><dd>Not really</dd><dt>What else would you want or need to know before making a decision?</dt><dd>I don’t need to know anything else right now. I don’t see myself pursuing this career, so I have no further questions.</dd></dl>
+      </article>
+      <article class="res">
+        <h3>Understanding the Role of Your Academic Success Advisor (ASA)</h3>
+        <span class="badge">Reflection</span>
+        <p>An ASA, or Academic Success Advisor, is someone who guides students through college and helps them make the best choices to reach their goals. Every student at CLC is assigned an ASA based on their major, so the advisor can give guidance specific to that field. Students should meet with their ASA at least three times per semester: once at the beginning, once in the middle, and once at the end. To get the most out of each meeting, I should plan my questions ahead of time and take notes during the meeting. One of my biggest upcoming challenges is planning how to transfer to my desired four-year university, so that is a good topic to bring to my ASA. I would ask what I should get done now to prepare for the transfer.</p>
+        <dl class="qa"><dt>My ASA</dt><dd>Emily Ciecil</dd><dt>ASA’s email</dt><dd>eciesil@navigate.clcillinois.edu</dd></dl>
+      </article>
       <a class="back" href="#contents">Back to contents</a>
     </div>
   </section>
@@ -222,9 +275,11 @@
       <a class="back" href="#contents">Back to contents</a>
     </div>
   </section>
-</main>
-<footer>© 2026 Noah</footer>
+</template>
+<footer>© 2026 Noah <span id="who"></span></footer>
+<script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@3.28.1/lib/msal-browser.min.js"></script>
 <script>
+  function build() {
   // Content for the CLC Student Resources section. Edit text here.
   const WK = 'Mon–Thu', MT = 'Mon–Thu 7:30 a.m.–6:30 p.m. · Fri 7:30 a.m.–4:30 p.m. · Sat–Sun Closed';
   const resources = [
@@ -234,7 +289,7 @@
       locs: 'Grayslake: A151',
       hours: [['Grayslake', 'Mon 8:00 a.m.–6:30 p.m. · Tue–Fri 8:00 a.m.–4:30 p.m. · Sat–Sun Closed']],
       url: 'https://stuportal.clcillinois.edu/resources/caps',
-      plan: 'I struggle a bit with self-confidence, and navigating interactions in relationships. I would use this resource to help me unpack my home and school life.' },
+      plan: 'I struggle a bit with self-confidence and with navigating relationships. I would use this resource to help me unpack my home and school life.' },
     { name: 'CLC Library', tag: 'Sense of Community', c: '#FFC93C',
       desc: 'On all three campuses, the CLC Library is your portal to knowledge and success.',
       email: '', phone: ['847-908-5997'],
@@ -244,7 +299,7 @@
               ['Southlake', 'Mon–Thu 8:30 a.m.–7:30 p.m. · Fri 8:30 a.m.–4:30 p.m. · Sat 9:00 a.m.–1:00 p.m. · Sun Closed'],
               ['Online', 'Mon–Thu 9:00 a.m.–7:00 p.m. · Fri 9:00 a.m.–4:00 p.m. · Sat 10:00 a.m.–2:00 p.m. · Sun 2:00–6:00 p.m.']],
       url: 'https://stuportal.clcillinois.edu/resources/library',
-      plan: 'I can connect with peers outside of class, especially those with similar interests to mine, like Cybersecurity.' },
+      plan: 'I can connect with peers outside of class, especially those who share my interests, like Cybersecurity.' },
     { name: 'Financial Aid Office', tag: 'Financial', c: '#7BD389',
       desc: 'The Financial Aid Office at CLC is dedicated to supporting students in achieving their educational aspirations by providing access to a wide range of financial assistance programs. These include scholarships, grants, loans and work-study opportunities, all designed to make higher education more accessible and affordable.',
       email: 'finaid@clcillinois.edu', phone: ['847-543-2062', '847-543-3062'],
@@ -309,6 +364,48 @@
     g += `<div class="blk" style="grid-column:${d + 2};grid-row:${(s - .5) * 2 + 2}/${(e - .5) * 2 + 2};--b:${col[c]}" title="${days[d]} ${fmt(s)}–${fmt(e)}">${esc(label)}</div>`;
   }));
   grid.innerHTML = g;
+  }
+
+  // ---- Sign-in: only Microsoft accounts ending in clcillinois.edu may see the portfolio ----
+  // Setup (see the instructions I gave you): register a free app in Microsoft Entra, then paste its Application (client) ID here.
+  const CLIENT_ID = '20b0e046-e70c-4622-a03e-8ad56cde4c5b';
+  const ALLOWED = /@([a-z0-9-]+\.)*clcillinois\.edu$/i;
+  const $ = id => document.getElementById(id);
+  const say = t => { $('msg').textContent = t; };
+
+  function nuke() { // delete the content, not just hide it
+    const v = $('vault'); if (v) v.remove();
+    $('app').replaceChildren(); $('app').hidden = true; $('gate').hidden = false;
+    sessionStorage.clear();
+  }
+  function unlock(m, acct) {
+    $('gate').hidden = true; $('app').hidden = false;
+    $('app').append($('vault').content.cloneNode(true)); $('vault').remove();
+    build();
+    $('who').innerHTML = '· ' + esc2(acct.username) + ' <button type="button" id="out">Sign out</button>';
+    $('out').onclick = async () => { try { await m.logoutPopup({ account: acct }); } catch (e) {} location.reload(); };
+  }
+  const esc2 = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  function verify(m, acct) {
+    if (ALLOWED.test(acct.username || '')) return unlock(m, acct);
+    nuke(); $('signin').hidden = false;
+    say('Access denied. This page is only for CLC accounts (ending in clcillinois.edu).');
+  }
+  (async () => {
+    if (CLIENT_ID.startsWith('PASTE')) { $('signin').hidden = true; say('Setup needed: add your Microsoft app client ID to CLIENT_ID in this file.'); return; }
+    const m = new msal.PublicClientApplication({
+      auth: { clientId: CLIENT_ID, authority: 'https://login.microsoftonline.com/organizations', redirectUri: location.origin + location.pathname },
+      cache: { cacheLocation: 'sessionStorage' }
+    });
+    await m.initialize();
+    await m.handleRedirectPromise();
+    const acct = m.getAllAccounts()[0];
+    if (acct) return verify(m, acct);
+    $('signin').onclick = async () => {
+      try { const r = await m.loginPopup({ scopes: ['openid', 'profile'] }); verify(m, r.account); }
+      catch (e) { say('Sign-in was cancelled or failed. Please try again.'); }
+    };
+  })();
 </script>
 </body>
 </html>
