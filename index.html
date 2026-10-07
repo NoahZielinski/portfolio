@@ -100,6 +100,22 @@
   .plan span { display: block; font: 600 .85rem var(--display); font-style: normal; color: var(--muted); }
   @media (max-width: 34rem) { .res dl { grid-template-columns: 1fr; } .res dt { line-height: 1.4; } }
 
+  /* Study plan */
+  .stats { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .stats div { flex: 1 1 12rem; padding: 1rem 1.25rem; border: 2px solid var(--c); border-radius: 8px; font: 600 1rem/1.3 var(--display); }
+  .stats b { display: block; font: 800 3rem/1 var(--display); letter-spacing: -.03em; }
+  .note { margin: 0; color: var(--muted); font-style: italic; }
+  .sub { margin: .5rem 0 0; font: 800 1.4rem/1.2 var(--display); letter-spacing: -.02em; }
+  .sched { overflow-x: auto; border: 2px solid var(--c); border-radius: 6px; }
+  .grid { display: grid; grid-template-columns: 4.25rem repeat(7, minmax(6.5rem, 1fr)); grid-template-rows: auto repeat(48, 1.6rem); min-width: 54rem; font: 600 .7rem/1.15 var(--display); }
+  .grid .dh { padding: .4rem .25rem; text-align: center; font-weight: 800; font-size: .8rem; border-bottom: 2px solid var(--c); }
+  .grid .tm { grid-column: 1; padding-right: .4rem; text-align: right; color: var(--muted); font-size: .65rem; transform: translateY(-.45em); }
+  .grid .blk { margin: 1px; padding: .1rem .3rem; border-radius: 3px; overflow: hidden; display: flex; align-items: center; justify-content: center; text-align: center; background: var(--b); }
+  .plans { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: .5rem 1.5rem; }
+  .plans dt { font: 800 1rem/1.7 var(--display); }
+  .plans dd { margin: 0; }
+  @media (max-width: 34rem) { .plans { grid-template-columns: 1fr; gap: 0; } .plans dd { margin-bottom: .75rem; } }
+
   /* For Google Slides: <iframe class="embed" src="YOUR_EMBED_LINK" allowfullscreen></iframe> */
   .embed { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 6px; }
 
@@ -142,7 +158,20 @@
   <section class="chapter" id="study-plan" style="--c:#FFC93C;--i:1">
     <h2 class="tab">Study Plan</h2>
     <div class="sheet">
-      <p class="empty">Work for this section goes here.</p>
+      <div class="stats">
+        <div><b>20</b>hours in class each week</div>
+        <div><b>9</b>hours of homework &amp; studying each week</div>
+      </div>
+      <p class="note">All my courses are online and asynchronous except one, so most of my time “in class” is actually just doing the homework.</p>
+      <h3 class="sub">My Weekly Schedule</h3>
+      <div class="sched" tabindex="0" role="region" aria-label="Weekly schedule, scrolls sideways on small screens"><div class="grid" id="grid"></div></div>
+      <h3 class="sub">If Things Change</h3>
+      <dl class="plans">
+        <dt>Unexpected sickness</dt><dd>N/A. I don’t take care of anyone.</dd>
+        <dt>Scheduled to work more hours than usual</dt><dd>I take time out of my socialization blocks to do homework or to cover the extra hours.</dd>
+        <dt>Losing regular transportation</dt><dd>N/A. All of my classes are online.</dd>
+        <dt>Big project</dt><dd>I take time out of my socialization blocks.</dd>
+      </dl>
       <a class="back" href="#contents">Back to contents</a>
     </div>
   </section>
@@ -249,6 +278,30 @@
       </details>
       <p class="plan"><span>How I envision using this resource</span>${esc(r.plan)}</p>
     </article>`).join('');
+
+  // Study Plan weekly schedule. Each entry is start-end|label|color, in 24-hour decimal time (0.5 = 12:30 AM).
+  const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  const col = { g:'#D9EAD3', s:'#D9D2E9', y:'#FFF2CC', p:'#D0E0E3', o:'#FCE5CD', r:'#F4CCCC', b:'#CFE2F3' };
+  const D='Decompress Time', SH='Study & Homework', EX='Extra School Time or Personal Projects', CS='College Success Seminar';
+  const wk = (...b) => b;
+  const sched = [
+    [[.5,2,D,'g'],[2,11,'Sleep','s'],[11,11.5,'Brunch','g'],[11.5,12.5,'Exercise','y'],[12.5,14,'Personal Projects','p'],[14,14.5,'Snack','g'],[14.5,17.5,EX,'o'],[17.5,18,'Dinner','g'],[18,20,CS,'r'],[20,21.5,SH,'o'],[21.5,22,'Calls w/ friends','g'],[22,23.5,SH,'o'],[23.5,24.5,D,'g']],
+    [[.5,2,D,'g'],[2,11,'Sleep','s'],[11,12,'Brunch','g'],[12,13,'Transport','y'],[13,15,'Biology','r'],[15,16,'Transport','y'],[16,19,'Work','b'],[19,19.5,'Transport','y'],[19.5,20,'Dinner','g'],[20,21.5,SH,'o'],[21.5,22,'Calls w/ friends','g'],[22,23.5,SH,'o'],[23.5,24.5,D,'g']],
+    [[.5,2,D,'g'],[2,11,'Sleep','s'],[11,11.5,'Brunch','g'],[11.5,14.5,EX,'o'],[14.5,15,'Transport','y'],[15,17,'Work','b'],[17,17.5,'Transport','y'],[17.5,18,'Dinner','g'],[18,20,CS,'r'],[20,21.5,SH,'o'],[21.5,22,'Calls w/ friends','g'],[22,23.5,SH,'o'],[23.5,24.5,D,'g']],
+    [[.5,2,D,'g'],[2,11,'Sleep','s'],[11,12,'Brunch','g'],[12,13,'Transport','y'],[13,15,'Biology','r'],[15,16,'Transport','y'],[16,18.5,'Work','b'],[18.5,19,'Transport','y'],[19,19.5,'Dinner','g'],[19.5,21,SH,'o'],[21,21.5,'Calls w/ friends','g'],[21.5,23,SH,'o'],[23,24.5,D,'g']],
+    [[.5,2,D,'g'],[2,11,'Sleep','s'],[11,11.5,'Brunch','g'],[11.5,12.5,'Exercise','y'],[12.5,14.5,'Personal Projects','p'],[14.5,15,'Snack','g'],[15,18,EX,'o'],[18,18.5,'Dinner','g'],[18.5,20,SH,'o'],[20,21.5,D,'g'],[21.5,22,'Calls w/ friends','g'],[22,23.5,SH,'o'],[23.5,24.5,D,'g']],
+    null,
+    [[.5,9.5,'Sleep','s'],[9.5,10,'Transport','y'],[10,13,'Work','b'],[13,13.5,'Transport','y'],[13.5,14,'Lunch','g'],[14,15,'Exercise','y'],[15,18,EX,'o'],[18,18.5,'Dinner','g'],[18.5,20,SH,'o'],[20,21,'Calls w/ friends','g'],[21,22,D,'g'],[22,23.5,SH,'o'],[23.5,24.5,D,'g']]
+  ];
+  sched[5] = sched[4]; // Saturday matches Friday
+  const fmt = t => { const h = Math.floor(t) % 24, m = t % 1 ? ':30' : ':00'; return (h % 12 || 12) + m + (h < 12 ? ' AM' : ' PM'); };
+  const grid = document.getElementById('grid');
+  let g = '<div></div>' + days.map(d => `<div class="dh">${d}</div>`).join('');
+  for (let i = 1; i < 48; i += 2) g += `<div class="tm" style="grid-row:${i + 2}">${fmt(.5 + i / 2)}</div>`;
+  sched.forEach((day, d) => day.forEach(([s, e, label, c]) => {
+    g += `<div class="blk" style="grid-column:${d + 2};grid-row:${(s - .5) * 2 + 2}/${(e - .5) * 2 + 2};--b:${col[c]}" title="${days[d]} ${fmt(s)}–${fmt(e)}">${esc(label)}</div>`;
+  }));
+  grid.innerHTML = g;
 </script>
 </body>
 </html>
