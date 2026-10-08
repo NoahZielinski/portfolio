@@ -139,6 +139,11 @@
   .gmsg { margin: 1rem 0 0; color: #B3261E; font-weight: 600; }
   footer button { margin-left: .75rem; padding: .15rem .7rem; border: 1px solid rgba(255,255,255,.5); border-radius: 6px; background: none; color: inherit; font: inherit; cursor: pointer; }
 
+  /* Essay */
+  .essay p { margin: 0; max-width: 46rem; }
+  .essay .byline { max-width: none; }
+  .essay .cited { padding-left: 2rem; text-indent: -2rem; }
+
   /* For Google Slides: <iframe class="embed" src="YOUR_EMBED_LINK" allowfullscreen></iframe> */
   .embed { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 6px; }
 
@@ -254,8 +259,13 @@
 
   <section class="chapter" id="growth-mindset" style="--c:#4C8DFF;--i:4">
     <h2 class="tab">Growth Mindset, Thinking, &amp; Self Advocacy</h2>
-    <div class="sheet">
-      <p class="empty">Work for this section goes here.</p>
+    <div class="sheet essay">
+      <p class="byline">Noah Zielinski · CLC 120 · Reflection</p>
+      <p>One challenge I have faced this semester is managing a heavy course load on top of a work schedule. Almost all of my classes are online and asynchronous, so nobody tells me when to show up, and most of my “class time” is really just homework. At first I treated the situation as a test of whether I was naturally good at managing my time. Looking back, my response was a mix of both mindsets. According to Open Stax College Success, a growth mindset is the belief that abilities can be developed through effort, good strategies, and learning from feedback, while a fixed mindset treats ability as something a person either has or does not have (Baldwin). I showed a growth mindset when I built a weekly schedule, started using strategies like skimming and practice testing, and kept adjusting what did not work. A fixed mindset would have been giving up on the schedule the first time I fell behind. Two parts of a growth mindset could have helped me even more: treating mistakes as useful feedback instead of failures, and asking for help earlier. My strengths that support my growth are planning ahead, a willingness to try new tools like Quizlet and shorthand, and a practical, problem-solving approach to my time.</p>
+      <p>Being a self-advocate means speaking up for what I need to succeed and using the resources available to me, instead of waiting for someone to notice a problem. Baldwin’s textbook presents taking personal responsibility for your own success as a central part of college, and I think strong self-advocacy builds on that (Baldwin). The key components are knowing my own strengths and needs, knowing what resources exist, communicating clearly and respectfully, setting goals, and following through. In an academic setting, I can email an instructor early when an assignment is unclear, meet with my Academic Success Advisor to plan my transfer to a four-year university, and visit the Financial Aid Office to sort out my paperwork. In a professional setting, I can tell my supervisor about schedule conflicts ahead of time, ask for feedback on my work, and ask about training opportunities. Developing these skills will help me avoid problems that grow when they are ignored. It will also make my transfer smoother and help me get more out of the jobs I hold.</p>
+      <p>While writing this reflection I used several kinds of thinking. I used metacognition, because I looked at how I handled my own challenge and judged which of my strategies worked. I used analytical thinking when I broke the challenge into parts, such as scheduling, study methods, and asking for help. I used critical thinking when I honestly admitted that my response was only partly a growth mindset, instead of claiming it was perfect. I used problem-solving when I thought about which strategies could help next time. I used information literacy when I connected my own experience to the course textbook and cited it. I know this because each step required me to examine, compare, and support my ideas instead of just describing what happened.</p>
+      <h3 class="sub">Works Cited</h3>
+      <p class="cited">Baldwin, Amy, et al. <i>College Success</i>. OpenStax, 2020, openstax.org/books/college-success.</p>
       <a class="back" href="#contents">Back to contents</a>
     </div>
   </section>
@@ -280,7 +290,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@3.28.1/lib/msal-browser.min.js"></script>
 <script>
   function build() {
-  // Content for the CLC Student Resources section. Edit text here.
   const WK = 'Mon–Thu', MT = 'Mon–Thu 7:30 a.m.–6:30 p.m. · Fri 7:30 a.m.–4:30 p.m. · Sat–Sun Closed';
   const resources = [
     { name: 'Counseling & Peer Support', tag: 'Wellness', c: '#FF6F9C',
@@ -367,8 +376,8 @@
   }
 
   // ---- Sign-in: only Microsoft accounts ending in clcillinois.edu may see the portfolio ----
-  // Setup (see the instructions I gave you): register a free app in Microsoft Entra, then paste its Application (client) ID here.
   const CLIENT_ID = '20b0e046-e70c-4622-a03e-8ad56cde4c5b';
+  const REDIRECT = 'https://noahzielinski.github.io/portfolio/';
   const ALLOWED = /@([a-z0-9-]+\.)*clcillinois\.edu$/i;
   const $ = id => document.getElementById(id);
   const say = t => { $('msg').textContent = t; };
@@ -383,7 +392,7 @@
     $('app').append($('vault').content.cloneNode(true)); $('vault').remove();
     build();
     $('who').innerHTML = '· ' + esc2(acct.username) + ' <button type="button" id="out">Sign out</button>';
-    $('out').onclick = async () => { try { await m.logoutPopup({ account: acct }); } catch (e) {} location.reload(); };
+    $('out').onclick = () => m.logoutRedirect({ account: acct, postLogoutRedirectUri: REDIRECT });
   }
   const esc2 = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
   function verify(m, acct) {
@@ -394,16 +403,18 @@
   (async () => {
     if (CLIENT_ID.startsWith('PASTE')) { $('signin').hidden = true; say('Setup needed: add your Microsoft app client ID to CLIENT_ID in this file.'); return; }
     const m = new msal.PublicClientApplication({
-      auth: { clientId: CLIENT_ID, authority: 'https://login.microsoftonline.com/organizations', redirectUri: location.origin + location.pathname },
+      auth: { clientId: CLIENT_ID, authority: 'https://login.microsoftonline.com/organizations', redirectUri: REDIRECT },
       cache: { cacheLocation: 'sessionStorage' }
     });
     await m.initialize();
-    await m.handleRedirectPromise();
-    const acct = m.getAllAccounts()[0];
+    let res = null;
+    try { res = await m.handleRedirectPromise(); }
+    catch (e) { say('Sign-in error: ' + (e.errorCode || '') + ' ' + String(e.errorMessage || e.message || '').slice(0, 300)); }
+    const acct = (res && res.account) || m.getAllAccounts()[0];
     if (acct) return verify(m, acct);
     $('signin').onclick = async () => {
-      try { const r = await m.loginPopup({ scopes: ['openid', 'profile'] }); verify(m, r.account); }
-      catch (e) { say('Sign-in was cancelled or failed. Please try again.'); }
+      try { await m.loginRedirect({ scopes: ['openid', 'profile'] }); }
+      catch (e) { say('Sign-in error: ' + (e.errorCode || '') + ' ' + String(e.errorMessage || e.message || '').slice(0, 300)); }
     };
   })();
 </script>
