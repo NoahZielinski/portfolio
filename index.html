@@ -144,6 +144,17 @@
   .essay .byline { max-width: none; }
   .essay .cited { padding-left: 2rem; text-indent: -2rem; }
 
+  /* Identity map */
+  .map { display: grid; gap: .75rem; }
+  .core { justify-self: center; width: 9rem; height: 9rem; margin: .5rem 0 1rem; border-radius: 50%; background: var(--c); display: grid; place-content: center; text-align: center; font: 800 1.9rem/1 var(--display); box-shadow: 0 0 0 6px #fff, 0 0 0 9px var(--c); }
+  .core small { font: 600 .7rem var(--display); letter-spacing: .08em; text-transform: uppercase; }
+  .gh { margin: .5rem 0 0; padding-bottom: .25rem; border-bottom: 3px solid var(--g); }
+  .idg { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: .6rem; }
+  .chip { display: flex; gap: .7rem; align-items: center; padding: .55rem .8rem; background: #F4F6FA; border-left: 6px solid var(--g); border-radius: 6px; }
+  .chip .ic { font-size: 1.5rem; line-height: 1; }
+  .chip small { display: block; font: 600 .7rem/1.2 var(--display); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+  .chip b { font: 600 1rem/1.25 var(--text); }
+
   /* For Google Slides: <iframe class="embed" src="YOUR_EMBED_LINK" allowfullscreen></iframe> */
   .embed { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 6px; }
 
@@ -272,8 +283,23 @@
 
   <section class="chapter" id="identity-project" style="--c:#9B6BFF;--i:5">
     <h2 class="tab">Identity Project</h2>
-    <div class="sheet">
-      <p class="empty">Work for this section goes here.</p>
+    <div class="sheet essay">
+      <p class="byline">Noah Zielinski · Michelle Pas · CLC 120 302 · 30 September 2026 · Module #6 Core Assignment</p>
+      <h3 class="sub">My Identity Map</h3>
+      <div class="map" role="group" aria-label="Map of my personal and social identities">
+        <div class="core">Noah<small>identity map</small></div>
+        <h4 class="mini gh" style="--g:#9B6BFF">Personal identities</h4>
+        <ul class="idg" style="--g:#9B6BFF"><li class="chip"><span class="ic" aria-hidden="true">👤</span><span><small>Race</small><b>White</b></span></li><li class="chip"><span class="ic" aria-hidden="true">🌍</span><span><small>Ethnicity</small><b>Romanian, American, Japanese</b></span></li><li class="chip"><span class="ic" aria-hidden="true">🧍</span><span><small>Gender</small><b>Man</b></span></li><li class="chip"><span class="ic" aria-hidden="true">✨</span><span><small>Gender expression</small><b>Cisgender</b></span></li><li class="chip"><span class="ic" aria-hidden="true">❤️</span><span><small>Sexual orientation</small><b>Heterosexual</b></span></li><li class="chip"><span class="ic" aria-hidden="true">💪</span><span><small>(Dis)ability</small><b>Able-bodied</b></span></li><li class="chip"><span class="ic" aria-hidden="true">🎂</span><span><small>Age</small><b>Young adult</b></span></li><li class="chip"><span class="ic" aria-hidden="true">🇺🇸</span><span><small>Nationality</small><b>American</b></span></li><li class="chip"><span class="ic" aria-hidden="true">🏠</span><span><small>Class</small><b>Middle class</b></span></li><li class="chip"><span class="ic" aria-hidden="true">🔭</span><span><small>Religion / spirituality</small><b>Atheist</b></span></li></ul>
+        <h4 class="mini gh" style="--g:#2EC4B6">Social identities</h4>
+        <ul class="idg" style="--g:#2EC4B6"><li class="chip"><span class="ic" aria-hidden="true">🛂</span><span><small>Citizenship status</small><b>U.S. citizen, Romanian citizen</b></span></li><li class="chip"><span class="ic" aria-hidden="true">🗣️</span><span><small>First language</small><b>English</b></span></li><li class="chip"><span class="ic" aria-hidden="true">🌱</span><span><small>Political affiliation</small><b>None (Green, if I must pick)</b></span></li><li class="chip"><span class="ic" aria-hidden="true">👪</span><span><small>Family status</small><b>Partnered; nuclear family</b></span></li><li class="chip"><span class="ic" aria-hidden="true">➖</span><span><small>Caregiver status</small><b>N/A</b></span></li><li class="chip"><span class="ic" aria-hidden="true">🏀</span><span><small>Size / appearance</small><b>Tall, athletic</b></span></li><li class="chip"><span class="ic" aria-hidden="true">🗺️</span><span><small>Geography</small><b>United States of America</b></span></li><li class="chip"><span class="ic" aria-hidden="true">➖</span><span><small>Military status</small><b>N/A</b></span></li><li class="chip"><span class="ic" aria-hidden="true">💼</span><span><small>Employment status</small><b>Employed</b></span></li></ul>
+      </div>
+      <h3 class="sub">Reflection</h3>
+      <h4 class="mini">Of the different aspects of your identity, do you have more or fewer that provide you with a level of power or privilege? How does this impact how you experience school?</h4>
+      <p>I have more identities that give me power or privilege than ones that don’t. Being male, middle class, American, and a college student all work in my favor. Being middle class means I can focus on school without having to worry constantly about money. Being American means I don’t have to deal with the language or citizenship barriers some students face. My Romanian and Japanese background is part of who I am, but it rarely comes up at school. I feel American, and I don’t often feel singled out or out of place because of my background. Being 18 means I’m the typical age for a college student, so I fit in with most of my peers. Overall, I just treat school as what it is: a kind of unpleasant but necessary growing experience that I can use as a stepping stone for my major goals in life.</p>
+      <h4 class="mini">How does having a diverse student body improve your educational experience?</h4>
+      <p>I don’t have one standout moment where a classmate completely changed my mind, but I think diversity helps even when it’s quiet. People who grew up in different places or with different experiences notice different things, and that gives me a wider view of any topic than I’d get on my own. Being around people who aren’t like me also keeps me from assuming my way of seeing things is the default. Since my background gives me a bit of a blend of cultures, I know firsthand that one perspective is never the whole picture, and a diverse student body is where that idea gets tested.</p>
+      <h4 class="mini">What parts of your identity have the potential to help you be successful in college? Why do you think this?</h4>
+      <p>Being middle class and being a college student help me succeed because they give me the stability and access to focus on my education. But the thing that matters most isn’t really on the identity lists: discipline. I set goals and I fight like a demon to follow through on them. I think that’s the biggest factor in my success, because opportunities and resources only matter if you actually use them, and discipline is what turns them into results.</p>
       <a class="back" href="#contents">Back to contents</a>
     </div>
   </section>
@@ -290,6 +316,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@3.28.1/lib/msal-browser.min.js"></script>
 <script>
   function build() {
+  // Content for the CLC Student Resources section. Edit text here.
   const WK = 'Mon–Thu', MT = 'Mon–Thu 7:30 a.m.–6:30 p.m. · Fri 7:30 a.m.–4:30 p.m. · Sat–Sun Closed';
   const resources = [
     { name: 'Counseling & Peer Support', tag: 'Wellness', c: '#FF6F9C',
@@ -376,6 +403,7 @@
   }
 
   // ---- Sign-in: only Microsoft accounts ending in clcillinois.edu may see the portfolio ----
+  // Setup (see the instructions I gave you): register a free app in Microsoft Entra, then paste its Application (client) ID here.
   const CLIENT_ID = '20b0e046-e70c-4622-a03e-8ad56cde4c5b';
   const REDIRECT = 'https://noahzielinski.github.io/portfolio/';
   const ALLOWED = /@([a-z0-9-]+\.)*clcillinois\.edu$/i;
